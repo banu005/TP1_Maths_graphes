@@ -5,6 +5,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) {
         
+        // Création d'une matrice d'adjacence
         int[][] matrice = new int[4][4];
         
         // Sommet x1 
@@ -31,7 +32,7 @@ public class Main {
         matrice[3][2] = 1;
         matrice[3][3] = 0;
         
-
+        // Création d'une liste d'adjacence
         ListeAdj[] listeAdj = new ListeAdj[4];
         
         // Sommet x1
@@ -54,12 +55,13 @@ public class Main {
         System.out.println("ListeAdj estOriente : " + ListeAdj.estOriente(listeAdj));
         
         //2. vérifier si le graphe est valué
-        // Test avec une matrice d'adjacence non valuée
+        // Test avec une matrice d'adjacence
+        //\n permet d'aller à la ligne
         System.out.println("\n2. Les arcs n'ont pas tous la même valeur");
         System.out.println("MatriceAdj estValue : " + MatriceAdj.estValue(matrice));
         
         
-        // Test avec une liste d'adjacence valuée
+        // Test avec une liste d'adjacence
         ListeAdj[] listeAdjValuee = new ListeAdj[4];
         listeAdjValuee[0] = new ListeAdj(1, 3, new ListeAdj(2, 5, null));
         listeAdjValuee[1] = new ListeAdj(2, 2, null);
@@ -69,19 +71,24 @@ public class Main {
         
         //3.Les degrés atteignent des sommets
         System.out.println("\n3. Degrés sortants et entrants");
+        //matrice adjacence
         System.out.println("Degré sortant du sommet 0 (MatriceAdj) : " + MatriceAdj.degreeSortant(matrice, 0));
         System.out.println("Degré entrant du sommet 2 (MatriceAdj) : " + MatriceAdj.degreeEntrant(matrice, 2));
+        //liste adjacence
         System.out.println("Degré sortant du sommet 0 (ListeAdj) : " + ListeAdj.degreeSortant(listeAdj, 0));
         System.out.println("Degré entrant du sommet 2 (ListeAdj) : " + ListeAdj.degreeEntrant(listeAdj, 2));
         
         // 4.Plus haut et plus bas degré
         System.out.println("\n4. Degrés minimum et maximum");
+        //matrice adjacence
         System.out.println("Degré sortant min (MatriceAdj) : " + MatriceAdj.degreeSortantMin(matrice));
         System.out.println("Degré sortant max (MatriceAdj) : " + MatriceAdj.degreeSortantMax(matrice));
+        //liste adjacence
         System.out.println("Degré sortant min (ListeAdj) : " + ListeAdj.degreeSortantMin(listeAdj));
         System.out.println("Degré sortant max (ListeAdj) : " + ListeAdj.degreeSortantMax(listeAdj));
         
         // 5.Je précède mon successeur
+        //matrice adjacence
         System.out.println("\n5. Successeurs et prédécesseurs");
         int[] successeurs0 = MatriceAdj.successeurs(matrice, 0);
         System.out.print("Successeurs du sommet 0 (MatriceAdj) : ");
@@ -91,6 +98,7 @@ public class Main {
         System.out.print("Prédécesseurs du sommet 2 (MatriceAdj) : ");
         afficherTableau(predecesseurs2);
         
+        //liste adjacence
         int[] successeurs0Liste = ListeAdj.successeurs(listeAdj, 0);
         System.out.print("Successeurs du sommet 0 (ListeAdj) : ");
         afficherTableau(successeurs0Liste);
@@ -101,15 +109,20 @@ public class Main {
         
         // 6. Des connaissances communes
         System.out.println("\n6. Voisins communs");
+        //matrice adjacence
         System.out.println("Sommets 0 et 1 ont un voisin commun (MatriceAdj) : " 
                           + MatriceAdj.voisinCommun(matrice, 0, 1));
         System.out.println("Sommets 0 et 3 ont un voisin commun (MatriceAdj) : " 
                           + MatriceAdj.voisinCommun(matrice, 0, 3));
+        //liste adjacence
         System.out.println("Sommets 0 et 1 ont un voisin commun (ListeAdj) : " 
                           + ListeAdj.voisinCommun(listeAdj, 0, 1));
+        System.out.println("Sommets 0 et 3 ont un voisin commun (ListeAdj) : "
+                            + ListeAdj.voisinCommun(listeAdj, 0, 3));
 
         // 7. Où est la sortie (entrée) ?
         System.out.println("\n7. Entrées et sorties");
+        //matrice adjacence et liste adjacence
         System.out.println("Il existe une entrée (MatriceAdj) : " + MatriceAdj.entree(matrice));
         System.out.println("Il existe une sortie (MatriceAdj) : " + MatriceAdj.sortie(matrice));
         System.out.println("Il existe une entrée (ListeAdj) : " + ListeAdj.entree(listeAdj));
@@ -117,21 +130,25 @@ public class Main {
         
         // 8. Un sommet pour les gouverner tous
         System.out.println("\n8. Sommet universel");
+        //matrice adjacence et liste adjacence
         System.out.println("Il existe un sommet universel (MatriceAdj) : " + MatriceAdj.universel(matrice));
         System.out.println("Il existe un sommet universel (ListeAdj) : " + ListeAdj.universel(listeAdj));
         
         //9. Qu'importe les graphes s'exportent
+        // Exporter les graphes vers des fichiers en utilisant les méthodes d'exportation : exporter
         System.out.println("\n9. Export vers fichier");
         MatriceAdj.exporter(matrice, "graphe_matrice.txt");
         ListeAdj.exporter(listeAdj, "graphe_liste.txt");
         
         //10. Qu'importe les graphes
         System.out.println("\n10. Import depuis fichier");
+        // Importer les graphes depuis les fichiers en utilisant les méthodes d'importation : importer
+        // Matrice d'adjacence
         int[][] matriceImportee = MatriceAdj.importer("graphe_matrice.txt");
         if (matriceImportee != null) {
             System.out.println("Matrice importée - estOriente : " + MatriceAdj.estOriente(matriceImportee));
         }
-        
+        // Liste d'adjacence
         ListeAdj[] listeImportee = ListeAdj.importer("graphe_liste.txt");
         if (listeImportee != null) {
             System.out.println("Liste importée - estOriente : " + ListeAdj.estOriente(listeImportee));
