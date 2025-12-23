@@ -307,7 +307,7 @@ static ListeAdj[] importer(String fichier) {
                 // Construire la liste chaînée des successeurs
                 ListeAdj liste = null;
                 
-                // Parcourir de la fin vers le début pour construire la liste
+                // for pour parcourir de la fin vers le début pour construire la liste
                 for (int j = parties.length - 1; j >= 1; j--) {
                     int successeur = Integer.parseInt(parties[j]);
                     liste = new ListeAdj(successeur, liste);

@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class MatriceAdj {
+
+    //variable
     int[][] matrice;
     
     // Constructeur
@@ -179,7 +181,7 @@ public class MatriceAdj {
                 }
             }
             
-            // Si ce sommet a (n-1) successeurs, c'est un sommet universel
+            // if pour savoir si ce sommet a (n-1) successeurs
             if (nbSuccesseurs == n - 1) {
                 return true;
             }
@@ -189,19 +191,20 @@ public class MatriceAdj {
     }
     
     // 9.fonction qui attend en entrée un graphe et le chemin vers un fichier vers lequel sera exporté la représentation du graphe.
+    //on fait un try catch pour gérer les exceptions
     public static void exporter(int[][] matrice, String fichier) {
         try {
             FileWriter monFichier = new FileWriter(fichier);
             
-            // Première ligne : identifier le format
+            // Identifier le format
             monFichier.write("MatriceAdj\n");
             
-            // Écrire chaque ligne de la matrice
+            //for pour écrire la matrice dans le fichier
             for (int i = 0; i < matrice.length; i++) {
                 for (int j = 0; j < matrice[i].length; j++) {
                     monFichier.write(matrice[i][j] + "");
                     
-                    // Ajouter un espace sauf après le dernier élément
+                    // if pour éviter un espace en trop à la fin de la ligne
                     if (j < matrice[i].length - 1) {
                         monFichier.write(" ");
                     }
@@ -214,6 +217,7 @@ public class MatriceAdj {
             
         } catch (IOException e) {
             System.out.println("Erreur lors de l'export : " + e.getMessage());
+            // Imprimer la pile d'appels pour le débogage
             e.printStackTrace();
         }
     }
@@ -224,7 +228,7 @@ public class MatriceAdj {
             File file = new File(fichier);
             Scanner scanner = new Scanner(file);
             
-            // Lire la première ligne pour vérifier le format
+            // Lire et vérifier le format
             String format = scanner.nextLine();
             if (!format.equals("MatriceAdj")) {
                 System.out.println("Format de fichier incorrect : " + format);
@@ -232,7 +236,7 @@ public class MatriceAdj {
                 return null;
             }
             
-            // Compter le nombre de lignes pour déterminer la taille
+            // définir la taille de la matrice
             int taille = 0;
             while (scanner.hasNextLine()) {
                 scanner.nextLine();
@@ -242,10 +246,12 @@ public class MatriceAdj {
             
             // Relire le fichier pour remplir la matrice
             scanner = new Scanner(file);
-            scanner.nextLine(); // Sauter la première ligne
+            //aller à la ligne après le format
+            scanner.nextLine();
             
             int[][] matrice = new int[taille][taille];
             
+            //for pour lire la matrice depuis le fichier
             for (int i = 0; i < taille; i++) {
                 String ligne = scanner.nextLine();
                 String[] valeurs = ligne.split("\\s+");
@@ -255,6 +261,7 @@ public class MatriceAdj {
                 }
             }
             
+            //fermer le scanner
             scanner.close();
             System.out.println("Import réussi depuis : " + fichier);
             return matrice;
